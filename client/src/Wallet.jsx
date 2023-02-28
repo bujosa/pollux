@@ -14,14 +14,13 @@ function Wallet({
     const privateKey = evt.target.value;
     setPrivateKey(privateKey);
 
-    const address = secp.getPublicKey(privateKey);
+    const address = toHex(secp.getPublicKey(privateKey));
     setAddress(address);
 
     if (address) {
-      console.log('pubkey', address);
       const {
         data: { balance },
-      } = await server.get(`balance/${toHex(address)}`);
+      } = await server.get(`balance/${address}`);
       setBalance(balance);
     } else {
       setBalance(0);
